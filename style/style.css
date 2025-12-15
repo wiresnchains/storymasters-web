@@ -11,3 +11,8 @@
 label, button, input, textarea {
     display: block;
 }
+
+body {
+    background-image: url("img/background.jpg");
+    background-size: cover;
+}
