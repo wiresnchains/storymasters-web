@@ -1,24 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="een">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Storymasters - Welkom</title>
+        <link rel="stylesheet" href="/style/style.css">
+    </head>
+    <body>
+        <nav class="flex g-3 center-y">
+            <a class="nav-item active" href="/">
+                <h2 class="title">Storymasters</h2>
+            </a>
+            <a class="nav-item" href="/">Join game</a>
+            <a class="nav-item" href="/">Host game</a>
+        </nav>
 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Storymasters - Welkom</title>
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/styleHome.css">
-</head>
+        <div class="page-wrapper flex center-x center-y h-100">
+            <div class="card flex vertical g-1">
+                <h1 class="text-center">Title</h1>
+                <input class="textbox w-100" type="text" placeholder="Type text..." />
+                <div class="flex g-1 flex-1 w-100">
+                    <button class="btn btn-primary">Join Game</button>
+                    <button class="btn btn-secondary">Host Game</button>
+                </div>
+            </div>
+        </div>
 
-<body>
-    <div class="container">
-    <h1 class="title">My Game</h1>
-
-    <div class="buttons">
-      <button class="btn join"><a href="joinGame.html">Join Game</a></button>
-      <button class="btn create"><a href="newGame.html">Create Game</a></button>
-    </div>
-  </div>
-    <script src="/script/script.js" type="text/javascript"></script>
-</body>
-
+        <script src="/script/script.js" type="text/javascript"></script>
+    </body>
 </html>
