@@ -19,11 +19,38 @@ html, body {
     height: 100svh;
 }
 
-.page-wrapper {
+nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 1.5rem 3.5rem;
+    width: 100%;
 }
 
-.page-main {
-    width: 15%;
+nav .title {
+    font-weight: 500;
+}
+
+nav .nav-item {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.2s color;
+}
+
+nav .nav-item.active, nav .nav-item:hover {
+    color: #c774f7;
+}
+
+.page-wrapper {
+    background: url("/img/background.jpg") center center;
+    background-size: cover;
+}
+
+.card {
+    background: #fff;
+    padding: 2rem;
+    width: 30rem;
+    border-radius: 0.6rem;
 }
 
 .h-100 {
@@ -48,6 +75,10 @@ html, body {
 
 .g-2 {
     gap: 1rem;
+}
+
+.g-3 {
+    gap: 3rem;
 }
 
 .flex.center-x {
@@ -86,12 +117,12 @@ html, body {
 }
 
 .btn.btn-secondary {
-    background: #CA8DED;
+    background: #222;
     color: #fff;
 }
 
 .btn.btn-secondary:hover {
-    background: #d09cee;
+    background: #2f2f2f;
 }
 
 .textbox {
