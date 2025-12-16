@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
     font-size: 14px;
 }
@@ -6,6 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: "Inter", sans-serif;
 }
 
 label, button, input, textarea {
@@ -16,12 +19,27 @@ html, body {
     height: 100svh;
 }
 
+.page-wrapper {
+}
+
+.page-main {
+    width: 15%;
+}
+
 .h-100 {
     height: 100%;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 .flex {
     display: flex;
+}
+
+.flex-1 > * {
+    flex: 1;
 }
 
 .g-1 {
@@ -42,4 +60,44 @@ html, body {
 
 .flex.vertical {
     flex-direction: column;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.btn {
+    border: none;
+    outline: none;
+    padding: 0.8rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s background, 0.2s outline-color;
+}
+
+.btn.btn-primary {
+    background: #9E4ACE;
+    color: #fff;
+}
+
+.btn.btn-primary:hover {
+    background: #ab61d6;
+}
+
+.btn.btn-secondary {
+    background: #CA8DED;
+    color: #fff;
+}
+
+.btn.btn-secondary:hover {
+    background: #d09cee;
+}
+
+.textbox {
+    border: 1px solid #e3e3e3;
+    outline: none;
+    padding: 0.7rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 0.9rem;
 }
