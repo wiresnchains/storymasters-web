@@ -41,6 +41,10 @@ nav .nav-item.active, nav .nav-item:hover {
     color: #c774f7;
 }
 
+a {
+    text-decoration: none;
+}
+
 .page-wrapper {
     background: url("/img/background.jpg") center center;
     background-size: cover;

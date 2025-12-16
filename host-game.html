@@ -3,26 +3,25 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Storymasters - Welkom</title>
+        <title>Storymasters - Host game</title>
         <link rel="stylesheet" href="/style/style.css">
     </head>
     <body>
         <nav class="flex g-3 center-y">
-            <a class="nav-item active" href="/">
+            <a class="nav-item" href="/">
                 <h2 class="title">Storymasters</h2>
             </a>
-            <a class="nav-item" href="/join-game.html">Join game</a>
-            <a class="nav-item" href="/">Host game</a>
+            <a class="nav-item" href="/">Join game</a>
+            <a class="nav-item active" href="/">Host game</a>
         </nav>
 
         <div class="page-wrapper flex center-x center-y h-100">
             <div class="card flex vertical g-1">
-                <h1 class="text-center">Welkom!</h1>
-                <a href="/join-game.html">
-                    <button class="btn btn-primary w-100">Join Game</button>
-                </a>
-                <a href="/host-game.html">
-                    <button class="btn btn-secondary w-100">Host Game</button>
+                <h1 class="text-center">Host Game</h1>
+                <input class="textbox w-100" type="text" placeholder="Koppelcode" id="connection-code" readonly />
+                <button class="btn btn-primary">Host Game</button>
+                <a href="/">
+                    <button class="btn btn-secondary w-100">Terug naar startpagina</button>
                 </a>
             </div>
         </div>
