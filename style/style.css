@@ -112,21 +112,22 @@ a {
     transition: 0.2s background, 0.2s outline-color;
 }
 
-.btn.btn-primary {
-    background: #9E4ACE;
+.btn.btn-join {
+    background: #4caf50;
     color: #fff;
 }
 
-.btn.btn-primary:hover {
-    background: #ab61d6;
+.btn.btn-create {
+    background: #2196f3;
+    color: #fff;
 }
 
-.btn.btn-secondary {
+.btn.btn-primary {
     background: rgb(51, 51, 51);
     color: #fff;
 }
 
-.btn.btn-secondary:hover {
+.btn.btn-primary:hover {
     background-color: rgb(34, 34, 34);
 }
 
