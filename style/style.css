@@ -8,7 +8,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: Montserrat, "Noto Sans Arabic", "Helvetica Neue", Helvetica, Arial, "Bai Jamjuree", sans-serif;
 }
 
 label, button, input, textarea {
@@ -19,26 +19,20 @@ html, body {
     height: 100svh;
 }
 
-nav {
+.back-home {
     position: absolute;
-    top: 0;
-    left: 0;
-    padding: 1.5rem 3.5rem;
-    width: 100%;
-}
-
-nav .title {
-    font-weight: 500;
-}
-
-nav .nav-item {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    background: rgb(51, 51, 51);
     color: #fff;
-    text-decoration: none;
-    transition: 0.2s color;
+    font-weight: 800;
 }
 
-nav .nav-item.active, nav .nav-item:hover {
-    color: #c774f7;
+a {
+    text-decoration: none;
 }
 
 .page-wrapper {
@@ -48,9 +42,16 @@ nav .nav-item.active, nav .nav-item:hover {
 
 .card {
     background: #fff;
-    padding: 2rem;
+    padding: 1.3rem;
+    width: 25rem;
+    border-radius: 0.2rem;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.card.home {
     width: 30rem;
-    border-radius: 0.6rem;
+    padding: 3rem 3.5rem;
+    border-radius: 0.9rem;
 }
 
 .h-100 {
@@ -100,35 +101,66 @@ nav .nav-item.active, nav .nav-item:hover {
 .btn {
     border: none;
     outline: none;
-    padding: 0.8rem 1rem;
-    border-radius: 0.4rem;
-    font-size: 0.9rem;
+    padding: 1rem 1rem;
+    border-radius: 0.2rem;
+    font-size: 1.2rem;
+    font-weight: 800;
     cursor: pointer;
     transition: 0.2s background, 0.2s outline-color;
 }
 
+.btn.btn-join {
+    background: #4caf50;
+    color: #fff;
+}
+
+.btn.btn-create {
+    background: #2196f3;
+    color: #fff;
+}
+
 .btn.btn-primary {
-    background: #9E4ACE;
+    background: rgb(51, 51, 51);
     color: #fff;
 }
 
 .btn.btn-primary:hover {
-    background: #ab61d6;
-}
-
-.btn.btn-secondary {
-    background: #222;
-    color: #fff;
-}
-
-.btn.btn-secondary:hover {
-    background: #2f2f2f;
+    background-color: rgb(34, 34, 34);
 }
 
 .textbox {
-    border: 1px solid #e3e3e3;
+    border: 2px solid rgb(204, 204, 204);
     outline: none;
-    padding: 0.7rem 1rem;
-    border-radius: 0.4rem;
-    font-size: 0.9rem;
+    height: 48px;
+    border-radius: 0.2rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.textbox::placeholder {
+    color: rgba(153, 153, 153, 0.783);
+}
+
+.textbox:hover {
+  border-color: rgb(153, 153, 153);
+}
+
+.textbox:focus {
+  outline: none;
+  border-color: rgb(102, 102, 102);
+}
+
+.banner {
+    position: absolute;
+    top: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.915);
+    box-shadow: 10px 10px 20px rgba(79, 48, 79, 0.776);
+    background-color: rgba(170, 15, 170, 0.776);
+    border-radius: 12px;
+    padding: 10px 50px;
+    width: 50rem;
+    text-align: center;
 }
