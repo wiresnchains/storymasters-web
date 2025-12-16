@@ -19,26 +19,16 @@ html, body {
     height: 100svh;
 }
 
-nav {
+.back-home {
     position: absolute;
-    top: 0;
-    left: 0;
-    padding: 1.5rem 3.5rem;
-    width: 100%;
-}
-
-nav .title {
-    font-weight: 500;
-}
-
-nav .nav-item {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    background: rgb(51, 51, 51);
     color: #fff;
-    text-decoration: none;
-    transition: 0.2s color;
-}
-
-nav .nav-item.active, nav .nav-item:hover {
-    color: #c774f7;
+    font-weight: 800;
 }
 
 a {
@@ -114,6 +104,7 @@ a {
     padding: 1rem 1rem;
     border-radius: 0.2rem;
     font-size: 1.2rem;
+    font-weight: 800;
     cursor: pointer;
     transition: 0.2s background, 0.2s outline-color;
 }
@@ -140,9 +131,9 @@ a {
 .textbox {
     border: 2px solid rgb(204, 204, 204);
     outline: none;
-    padding: 1rem 1.5rem;
+    height: 48px;
     border-radius: 0.2rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 800;
 }
 
