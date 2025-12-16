@@ -1,0 +1,37 @@
+const DEV_URL = "http://localhost:8080/";
+const LIVE_URL = "http://wiresnchains.com/";
+const LIVE_MODE = false;
+
+function buildQuery(params = {}) {
+    const query = new URLSearchParams(params).toString();
+    return query ? `?${query}` : "";
+}
+
+function getBaseUrl() {
+    return LIVE_MODE ? LIVE_URL : DEV_URL;
+}
+
+async function request(path, method, data = {}) {
+    const baseUrl = getBaseUrl();
+    const url = method === "GET" ? baseUrl + path + buildQuery(data) : baseUrl + path;
+
+    const res = await fetch(url, {
+        method: method,
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: method === "POST" ? JSON.stringify(data) : undefined,
+    });
+
+    const payload = await res.json();
+
+    if (!res.ok) {
+        throw new Error(payload);
+    }
+
+    return payload;
+}
+
+(async () => {
+    console.log(await request("create-game", "POST"));
+})();
