@@ -15,7 +15,7 @@ function getBaseURL(ws) {
     const result = LIVE_MODE ? LIVE_URL : DEV_URL;
 
     if (ws) {
-        result.replace("https", "ws").replace("http", "ws");
+        result.replace("https", "wss").replace("http", "ws");
     }
 
     return result;
