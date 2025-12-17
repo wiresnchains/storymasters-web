@@ -15,7 +15,7 @@
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="player-list">
-        player list
+        <div class="card players flex flex-wrap g-2" id="list"></div>
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="user-story-input">
@@ -95,11 +95,13 @@
             setTheme("Unknown theme");
 
             game.addEvent("player-joined", (name) => {
-                console.log("player " + name + " joined")
+                console.log("player " + name + " joined");
+                playerList.querySelector("#list").innerHTML += `<div class="card player flex center-x center-y" id="player-${name}"><p id="naam">${name}</p></div>`;
             });
 
             game.addEvent("player-removed", (name) => {
-                console.log("player " + name + " left")
+                console.log("player " + name + " left");
+                document.getElementById(`player-${name}`).remove();
             });
 
             game.addEvent("start-round", (payload) => {
