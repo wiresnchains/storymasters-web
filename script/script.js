@@ -13,6 +13,8 @@ function getBaseURL(ws) {
     if (ws) {
         result.replace("https", "ws").replace("http", "ws");
     }
+
+    return result;
 }
 
 async function request(path, method, data = {}) {
@@ -35,10 +37,6 @@ async function request(path, method, data = {}) {
 
     return payload;
 }
-
-(async () => {
-    console.log(await request("create-game", "POST"));
-})();
 
 function copyBtn() {
     const copyText = document.getElementById("connection-code");
@@ -97,15 +95,25 @@ class Game {
 
         this.ws.onopen = (event) => {
             console.log("Connected to websocket");
+
+            this.interval = setInterval(() => {
+                this.ws.send("im-alive");
+            }, 15000);
         }
 
         this.ws.onmessage = (event) => {
             const message = JSON.parse(event.data);
-            this.events[message.event](message.data);
+            const handler = this.events[message.event];
+
+            if (handler) {
+                handler(message.data);
+            }
         }
 
         this.ws.onclose = (event) => {
             console.log("Connected closed");
+            window.location.replace("/");
+            clearInterval(this.aliveInterval);
         }
     }
 
@@ -122,5 +130,5 @@ class Game {
 }
 
 function connectToGame(name, connectionCode) {
-    return new Game(new WebSocket(getBaseURL(true) + connectionCode + "/" + name));
+    return new Game(new WebSocket(getBaseURL(true) + "game/" + encodeURIComponent(connectionCode) + "/" + encodeURIComponent(name)));
 }
