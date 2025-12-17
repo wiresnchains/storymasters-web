@@ -54,6 +54,21 @@ a {
     border-radius: 0.9rem;
 }
 
+.card.players {
+    width: auto;
+    margin-bottom: 5rem;
+    height: 20rem;
+}
+.player {
+    height: 8rem;
+    text-align: center;
+}
+
+.card.game {
+    width: auto;
+    display: inline-flex;
+}
+
 .h-100 {
     height: 100%;
 }
@@ -143,6 +158,10 @@ a {
 
 .textbox:hover {
   border-color: rgb(153, 153, 153);
+}
+
+.textbox:disabled {
+    border-color: rgb(153, 153, 153);
 }
 
 .textbox:focus {

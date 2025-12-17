@@ -13,11 +13,27 @@
 
     <h1 class="banner">Story Masters</h1>
 
-    <div class="page-wrapper flex center-x center-y h-100">
+    <div class="page-wrapper flex vertical g-1 center-x center-y h-100">
+        <div class="card players flex vertical g-2">
+            <div class="flex horizontal g-1">
+                <div class="card player flex center-x center-y"><p id="naam">1</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">2</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">3</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">4</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">5</p></div>
+            </div>
+            <div class="players flex horizontal g-1">
+                <div class="card player flex center-x center-y"><p id="naam">6</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">7</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">8</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">9</p></div>
+                <div class="card player flex center-x center-y"><p id="naam">10</p></div>
+            </div>
+        </div>
         <div class="card flex vertical g-1">
             <div class="flex horizontal">
-                <input class="textbox w-100 text-center" type="text" value="bl bl"  placeholder="Spel-pin" id="connection-code"
-                    readonly />
+                <input class="textbox w-100 text-center" type="text" value="bl bl" placeholder="Spel-pin"
+                    id="connection-code" readonly />
                 <button id="copyBtn" onclick="copyBtn()">Copy</button>
             </div>
             <button class="btn btn-primary">Host Game</button>
