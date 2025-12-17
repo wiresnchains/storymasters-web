@@ -21,12 +21,16 @@
                 <button id="copyBtn" onclick="copyBtn()">Copy</button>
             </div>
             <button class="btn btn-primary" onclick="hostGame()">Host Game</button>
+            <button class="btn btn-primary" onclick="startGame()" id="start-game">Start Game</button>
         </div>
     </div>
 
     <script src="/script/script.js" type="text/javascript"></script>
     <script>
         const connectionCodeInput = document.getElementById("connection-code");
+        const startGameInput = document.getElementById("start-game");
+
+        startGameInput.style.display = "none";
 
         async function hostGame() {
             const tab = window.open("about:blank", "_blank");
@@ -34,6 +38,7 @@
             try {
                 const res = await request("create-game", "POST");
                 connectionCodeInput.value = res.connectionCode;
+                startGameInput.style.display = "";
 
                 const url = new URL("/join-game.html", window.location.origin);
                 url.searchParams.set("connectionCode", res.connectionCode);
@@ -44,6 +49,14 @@
                 console.error(e);
                 alert("Failed to create a new game");
             }
+        }
+
+        async function startGame() {
+            const res = await request("start-game", "POST", {
+                connectionCode: connectionCodeInput.value,
+            });
+
+            window.location.reload();
         }
     </script>
 </body>
