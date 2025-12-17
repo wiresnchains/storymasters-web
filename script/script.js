@@ -1,5 +1,5 @@
 const DEV_URL = "http://localhost:8080/";
-const LIVE_URL = "http://wiresnchains.com/";
+const LIVE_URL = "https://wiresnchains.com/";
 const LIVE_MODE = false;
 
 function buildQuery(params = {}) {
@@ -7,12 +7,16 @@ function buildQuery(params = {}) {
     return query ? `?${query}` : "";
 }
 
-function getBaseUrl() {
-    return LIVE_MODE ? LIVE_URL : DEV_URL;
+function getBaseURL(ws) {
+    const result = LIVE_MODE ? LIVE_URL : DEV_URL;
+
+    if (ws) {
+        result.replace("https", "ws").replace("http", "ws");
+    }
 }
 
 async function request(path, method, data = {}) {
-    const baseUrl = getBaseUrl();
+    const baseUrl = getBaseURL();
     const url = method === "GET" ? baseUrl + path + buildQuery(data) : baseUrl + path;
 
     const res = await fetch(url, {
@@ -84,4 +88,39 @@ function submitBtn() {
     submitBtn.style.display = 'none';
     game.style.display = 'none';
     submitText.style.display = 'inline-flex';
+}
+
+class Game {
+    constructor(ws) {
+        this.ws = ws;
+        this.events = {};
+
+        this.ws.onopen = (event) => {
+            console.log("Connected to websocket");
+        }
+
+        this.ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            this.events[message.event](message.data);
+        }
+
+        this.ws.onclose = (event) => {
+            console.log("Connected closed");
+        }
+    }
+
+    addEvent(name, handler) {
+        this.events[name] = handler;
+    }
+
+    sendEvent(name, payload) {
+        this.ws.send(JSON.stringify({
+            event: name,
+            data: payload,
+        }))
+    }
+}
+
+function connectToGame(name, connectionCode) {
+    return new Game(new WebSocket(getBaseURL(true) + connectionCode + "/" + name));
 }
