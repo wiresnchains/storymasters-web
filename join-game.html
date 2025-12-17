@@ -12,13 +12,22 @@
         <h1 class="banner">Story Masters</h1>
 
         <div class="page-wrapper flex center-x center-y h-100">
-            <div class="card flex vertical g-1">
-                <input class="textbox w-100 text-center" type="text" placeholder="Spel-PIN" id="connection-code" />
-                <input class="textbox w-100 text-center" type="text" placeholder="Naam" id="name" />
-                <button class="btn btn-primary">Join Game</button>
-            </div>
+            <form method="get" action="/game.html" class="card flex vertical g-1">
+                <input class="textbox w-100 text-center" type="text" placeholder="Spel-PIN" id="connection-code" name="connectionCode" />
+                <input class="textbox w-100 text-center" type="text" placeholder="Naam" id="name" name="name" />
+                <button class="btn btn-primary" type="submit">Join Game</button>
+            </form>
         </div>
 
         <script src="/script/script.js" type="text/javascript"></script>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            const connectionCode = params.get("connectionCode");
+            const connectionCodeInput = document.getElementById("connection-code");
+
+            if (connectionCode) {
+                connectionCodeInput.value = connectionCode;
+            }
+        </script>
     </body>
 </html>

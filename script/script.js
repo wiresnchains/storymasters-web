@@ -1,5 +1,5 @@
 const DEV_URL = "http://localhost:8080/";
-const LIVE_URL = "http://wiresnchains.com/";
+const LIVE_URL = "https://wiresnchains.com/";
 const LIVE_MODE = false;
 
 
@@ -11,12 +11,18 @@ function buildQuery(params = {}) {
     return query ? `?${query}` : "";
 }
 
-function getBaseUrl() {
-    return LIVE_MODE ? LIVE_URL : DEV_URL;
+function getBaseURL(ws) {
+    const result = LIVE_MODE ? LIVE_URL : DEV_URL;
+
+    if (ws) {
+        result.replace("https", "ws").replace("http", "ws");
+    }
+
+    return result;
 }
 
 async function request(path, method, data = {}) {
-    const baseUrl = getBaseUrl();
+    const baseUrl = getBaseURL();
     const url = method === "GET" ? baseUrl + path + buildQuery(data) : baseUrl + path;
 
     const res = await fetch(url, {
@@ -35,10 +41,6 @@ async function request(path, method, data = {}) {
 
     return payload;
 }
-
-// (async () => {
-//     console.log(await request("create-game", "POST"));
-// })();
 
 function copyBtn() {
     const copyText = document.getElementById("connection-code");
@@ -88,54 +90,49 @@ async function submitBtn() {
     submitBtn.style.display = 'none';
     game.style.display = 'none';
     submitText.style.display = 'inline-flex';
+}
 
+class Game {
+    constructor(ws) {
+        this.ws = ws;
+        this.events = {};
 
-    console.log(123);
+        this.ws.onopen = (event) => {
+            console.log("Connected to websocket");
 
-    const div = document.querySelector('div#game');
-    console.log(div);
-    const nodeList = div.querySelectorAll('input');
-    console.log(nodeList);
+            this.interval = setInterval(() => {
+                this.ws.send("im-alive");
+            }, 15000);
+        }
 
-    
-    const input = [...nodeList].map(input => input.value);
-    console.log(input);
-    const userStory = input.join(' ');
-    console.log(userStory);
-    
-    
+        this.ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            const handler = this.events[message.event];
 
+            if (handler) {
+                handler(message.data);
+            }
+        }
 
-    console.log('sending request...');
-    const response = await request("create-game", "POST");
-    console.log(response);
+        this.ws.onclose = (event) => {
+            console.log("Connected closed");
+            window.location.replace("/");
+            clearInterval(this.aliveInterval);
+        }
+    }
 
+    addEvent(name, handler) {
+        this.events[name] = handler;
+    }
 
+    sendEvent(name, payload) {
+        this.ws.send(JSON.stringify({
+            event: name,
+            data: payload,
+        }))
+    }
+}
 
-    
-    const gameID = response.connectionCode;
-    const player = 'Jos';
-
-    const url = `ws://${BASE_URL}/game/${gameID}/${player}`;
-    console.log('url: ');
-    console.log(url);
-    
-    const ws = new WebSocket(url);
-    const data = {
-        event: 'send-user-story',
-        data: {
-            message: userStory,
-            // as:
-            // wantTo:
-            // soThat: 
-        },
-    };
-
-    const json = JSON.stringify(data);
-
-    ws.addEventListener('open', (event) => {
-        console.log("OPEN");
-        ws.send(json);
-    })
-    // onopen = (event) => { }
+function connectToGame(name, connectionCode) {
+    return new Game(new WebSocket(getBaseURL(true) + "game/" + encodeURIComponent(connectionCode) + "/" + encodeURIComponent(name)));
 }
