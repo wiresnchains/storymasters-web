@@ -2,10 +2,6 @@ const DEV_URL = "http://localhost:8080/";
 const LIVE_URL = "https://wiresnchains.com/";
 const LIVE_MODE = false;
 
-
-const DEV_MODE = true;
-const BASE_URL = DEV_MODE ? 'localhost:8080' : 'wiresnchains.com';
-
 function buildQuery(params = {}) {
     const query = new URLSearchParams(params).toString();
     return query ? `?${query}` : "";
