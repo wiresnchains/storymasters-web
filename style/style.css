@@ -164,3 +164,11 @@ a {
     width: 50rem;
     text-align: center;
 }
+
+#copyBtn {
+    width: 4rem;
+    margin-left: 0.5rem;
+    border: 2px solid rgb(204, 204, 204);
+    background-color: white;
+    border-radius: 0.2rem;
+}
