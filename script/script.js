@@ -123,3 +123,16 @@ function connectToGame(name, connectionCode) {
     // return new Game(ws);
     return new Game(new WebSocket(getBaseURL(true) + "game/" + encodeURIComponent(connectionCode) + "/" + encodeURIComponent(name)));
 }
+
+const texts = [
+    "Antwoord verstuurd!",
+    "Even nadenken… 🤔",
+    "Dit ging snel!",
+    "Goede keuze!",
+    "Succes! 🍀",
+    "Wachten op de rest…",
+    "Bijna daar!",
+    "Topantwoord! ⭐",
+    "Ingezonden 🚀",
+    "Slim gespeeld!"
+];
