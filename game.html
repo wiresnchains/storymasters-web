@@ -38,13 +38,12 @@
     <div class="page-wrapper flex center-x center-y h-100" id="voting">
         <div class="card vote flex vertical g-1">
             <div class="voteOptions">
-                <table class="w-100">
+                <table class="w-100" id="votes">
                     <tr class="horizontal">
                         <th class="flex">Naam</th>
                         <th>User Story</th>
                         <th class="flex">Vote</th>
                     </tr>
-                    <div id="votes"></div>
                 </table>
             </div>
         </div>
@@ -180,23 +179,46 @@
                 switchView("user-story-input");
                 setTheme(theme);
                 startCountdown(60);
-                votes.innerHTML = "";
             });
 
             game.addEvent("show-voting", (payload) => {
                 switchView("voting");
 
                 if (payload.showResults) {
-                    startCountdown(5);
-                }
-                else {
-                    console.log(payload);
+                    votes.innerHTML = `<tr class="horizontal">
+                        <th class="flex">Naam</th>
+                        <th>User Story</th>
+                        <th class="flex">Votes</th>
+                    </tr>`;
                     
                     payload.userStories.forEach(us => {
                         votes.innerHTML += `<tr>
                             <td><p class="naam">${us.owner.name}</p></td>
                             <td><p class="userStory">${us.story}</p></td>
-                            <td><button id="voteBtn" onclick="voteBtn(${us.index})">Vote</button></td>
+                            <td>${us.votes}</td>
+                        </tr>`;
+                    });
+
+                    startCountdown(10);
+                }
+                else {
+                    votes.innerHTML = `<tr class="horizontal">
+                        <th class="flex">Naam</th>
+                        <th>User Story</th>
+                        <th class="flex">Vote</th>
+                    </tr>`;
+                    
+                    payload.userStories.forEach(us => {
+                        let lastRow = `<td></td>`;
+
+                        if (name !== us.owner.name) {
+                            lastRow = `<td><button id="voteBtn" onclick="voteBtn(${us.index})">Vote</button></td>`;
+                        }
+
+                        votes.innerHTML += `<tr>
+                            <td><p class="naam">${us.owner.name}</p></td>
+                            <td><p class="userStory">${us.story}</p></td>
+                            ${lastRow}
                         </tr>`;
                     });
 
@@ -206,7 +228,7 @@
 
             game.addEvent("show-leaderboard", (payload) => {
                 switchView("leaderboard");
-                startCountdown(5);
+                startCountdown(10);
             });
 
             submitBtn = function() {
