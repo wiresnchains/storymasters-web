@@ -66,7 +66,7 @@ function voteBtn() {
     const originalContent = button.innerHTML;
 
     // Show image
-    button.innerHTML = `<img src="/img/check.png" alt="Copied" style="height:20px;">`;
+    button.innerHTML = `<img src="/img/check.png" alt="Vote" style="height:20px;">`;
 
     // Restore after 1 second
     setTimeout(() => {

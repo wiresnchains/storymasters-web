@@ -68,7 +68,13 @@ a {
     display: inline-flex;
 }
 .card.vote {
-    width: 70rem;
+    width: 50rem;
+}
+.card.leaderBoard {
+    width: 20rem;
+}
+.punten, .naam {
+    text-align: center;
 }
 
 .h-100 {
