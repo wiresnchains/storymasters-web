@@ -67,6 +67,9 @@ a {
     width: auto;
     display: inline-flex;
 }
+.card.vote {
+    width: 70rem;
+}
 
 .h-100 {
     height: 100%;
