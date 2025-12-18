@@ -69,15 +69,20 @@ class Game {
 
     constructor(ws) {
         this.ws = ws;
+        
+        const old = Date.now();
 
         this.ws.onopen = (event) => {
-            console.log("Connected to websocket");
+            const ms = (Date.now() - old) + 'ms';
+            console.log(`(${ms}) Connected to websocket`);
+            // alert(ms);
 
             const tmp = this.queue;
             this.queue = null;
             tmp.forEach(arr => this.sendEvent(...arr));
+            
 
-            this.interval = setInterval(() => {
+            this.aliveInterval = setInterval(() => {
                 this.ws.send("I'm alive");
             }, 15000);
         }
@@ -104,6 +109,7 @@ class Game {
         console.log("sending event");
         if (this.queue === null) return this.ws.send(JSON.stringify({ event, data }));
         this.queue.push([ event, data ]);
+
         // this.ws.send(JSON.stringify({
         //     event: event,
         //     data: data,
