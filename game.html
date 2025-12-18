@@ -50,7 +50,16 @@
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="leaderboard">
-        leaderboard
+        <div class="card leaderBoard flex vertical g-1">
+            <div class="flex vertical">
+                <table id="leaderboard-table">
+                    <tr>
+                        <th class="">Naam</th>
+                        <th class="">Aantal punten</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
     <p id="timer">00:00</p>
@@ -78,6 +87,7 @@
             const leaderboard = document.getElementById("leaderboard");
             const timer = document.getElementById("timer");
             const votes = document.getElementById("votes");
+            const leaderboardTable = document.getElementById("leaderboard-table");
             
             function switchView(view) {
                 theme.style.display = "none";
@@ -229,6 +239,18 @@
             game.addEvent("show-leaderboard", (payload) => {
                 switchView("leaderboard");
                 startCountdown(10);
+
+                leaderboardTable.innerHTML = `<tr>
+                        <th class="">Naam</th>
+                        <th class="">Aantal punten</th>
+                    </tr>`;
+
+                payload.players.forEach(player => {
+                    leaderboardTable.innerHTML += `<tr>
+                        <td><p class="naam">${player.name}</p></td>
+                        <td><p class="punten">${player.points}</p></td>
+                    </tr>`;
+                })
             });
 
             submitBtn = function() {
