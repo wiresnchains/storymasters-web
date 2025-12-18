@@ -194,3 +194,13 @@ a {
     background-color: white;
     border-radius: 0.2rem;
 }
+
+#timer {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 500;
+}
