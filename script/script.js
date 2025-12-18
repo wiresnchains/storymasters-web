@@ -1,6 +1,10 @@
 const DEV_URL = "http://localhost:8080/";
-const LIVE_URL = "https://wiresnchains.com/";
+const LIVE_URL = "http://wiresnchains.com/";
 const LIVE_MODE = false;
+
+
+const DEV_MODE = true;
+const BASE_URL = DEV_MODE ? 'localhost:8080' : 'wiresnchains.com';
 
 function buildQuery(params = {}) {
     const query = new URLSearchParams(params).toString();
@@ -59,45 +63,22 @@ function copyBtn() {
     }, 1000);
 }
 
-async function submitBtn() {
-    const game = document.getElementById("game");
-    const submitText = document.getElementById("submit-text");
-    const submitBtn = document.getElementById("submit");
-    const submitInput = document.getElementById("submit-input");
-
-    const texts = [
-        "Antwoord verstuurd!",
-        "Even nadenken… 🤔",
-        "Dit ging snel!",
-        "Goede keuze!",
-        "Succes! 🍀",
-        "Wachten op de rest…",
-        "Bijna daar!",
-        "Topantwoord! ⭐",
-        "Ingezonden 🚀",
-        "Slim gespeeld!"
-    ];
-
-    // Kies een random tekst
-    const randomText = texts[Math.floor(Math.random() * texts.length)];
-
-    submitInput.value = randomText;
-
-    submitBtn.style.display = 'none';
-    game.style.display = 'none';
-    submitText.style.display = 'inline-flex';
-}
-
 class Game {
+    events = {};
+    queue = [];
+
     constructor(ws) {
         this.ws = ws;
-        this.events = {};
 
         this.ws.onopen = (event) => {
             console.log("Connected to websocket");
 
+            const tmp = this.queue;
+            this.queue = null;
+            tmp.forEach(arr => this.sendEvent(...arr));
+
             this.interval = setInterval(() => {
-                this.ws.send("im-alive");
+                this.ws.send("I'm alive");
             }, 15000);
         }
 
@@ -117,18 +98,22 @@ class Game {
         }
     }
 
-    addEvent(name, handler) {
-        this.events[name] = handler;
-    }
+    addEvent = (name, handler) => this.events[name] = handler;
 
-    sendEvent(name, payload) {
-        this.ws.send(JSON.stringify({
-            event: name,
-            data: payload,
-        }))
+    sendEvent = (event, data) => {
+        console.log("sending event");
+        if (this.queue === null) return this.ws.send(JSON.stringify({ event, data }));
+        this.queue.push([ event, data ]);
+        // this.ws.send(JSON.stringify({
+        //     event: event,
+        //     data: data,
+        // }))
     }
 }
 
 function connectToGame(name, connectionCode) {
+    // const url = `ws://${BASE_URL}/game/${gameID}/${player}`;
+    // const ws = new WebSocket(url);
+    // return new Game(ws);
     return new Game(new WebSocket(getBaseURL(true) + "game/" + encodeURIComponent(connectionCode) + "/" + encodeURIComponent(name)));
 }

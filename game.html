@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta params.name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Storymasters - Game</title>
     <link rel="stylesheet" href="/style/style.css">
 </head>
@@ -22,21 +22,21 @@
         <div class="card game flex vertical g-1">
             <div id="game" class="card game flex horizontal g-1">
                 <input class="textbox w-100 text-center" type="text" value="Als" id="gameText1" disabled readonly />
-                <input class="textbox w-100 text-center" type="text" name="as" placeholder="Vul in" id="input1" />
+                <input class="textbox w-100 text-center" type="text" params.name="as" placeholder="Vul in" id="input1" />
                 <input class="textbox w-100 text-center" type="text" value="wil ik" id="gameText2" disabled readonly />
-                <input class="textbox w-100 text-center" type="text" name="wantTo" placeholder="Vul in" id="input2" />
+                <input class="textbox w-100 text-center" type="text" params.name="wantTo" placeholder="Vul in" id="input2" />
                 <input class="textbox w-100 text-center" type="text" value="zodat" id="gameText3" disabled readonly />
-                <input class="textbox w-100 text-center" type="text" name="soThat" placeholder="Vul in" id="input3" />
+                <input class="textbox w-100 text-center" type="text" params.name="soThat" placeholder="Vul in" id="input3" />
             </div>
             <div style="display: none;" id="submit-text" class="card game flex horizontal g-1">
                 <input class="textbox w-100 text-center" type="text" id="submit-input" disabled readonly />
             </div>
-            <button onclick="submitBtn()" id="submit" class="btn btn-primary">Submit</button>
+            <button id="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="voting">
-        vothing
+        voting
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="leaderboard">
@@ -45,17 +45,22 @@
 
     <script src="/script/script.js" type="text/javascript"></script>
     <script type="text/javascript">
-        (() => {
-            const params = new URLSearchParams(window.location.search);
-            const connectionCode = params.get("connectionCode");
-            const name = params.get("name");
+        document.addEventListener("DOMContentLoaded", start);
 
-            if (!connectionCode || !name) {
+
+        // (() => {
+        function start() {
+            document.querySelector('button#submit').addEventListener('click', submitBtn);
+
+            const params = Object.fromEntries(new URLSearchParams(window.location.search).entries());
+
+            if (!params.connectionCode || !params.name) {
                 window.location.replace("/");
                 return;
             }
 
-            const game = connectToGame(name, connectionCode);
+            const game = connectToGame(params.name, params.connectionCode);
+            // game.sendEvent('send-user-story', { message: 'instant websocket test msg' });
             const theme = document.getElementById("theme");
             const playerList = document.getElementById("player-list");
             const userStoryInput = document.getElementById("user-story-input");
@@ -96,7 +101,9 @@
 
             game.addEvent("player-joined", (name) => {
                 console.log("player " + name + " joined");
-                playerList.querySelector("#list").innerHTML += `<div class="card player flex center-x center-y" id="player-${name}"><p id="naam">${name}</p></div>`;
+                const list = playerList.querySelector("#list");
+                list.style.display = 'none';
+                list.parentElement.innerHTML += `<div class="card player flex center-x center-y" id="player-${params.name}"><p class="btn" id="naam">${params.name}</p></div>`;
             });
 
             game.addEvent("player-removed", (name) => {
@@ -118,7 +125,46 @@
                 switchView("leaderboard");
                 console.log(payload);
             });
-        })();
+
+
+            function submitBtn() {
+                const elements = {
+                    game: document.getElementById("game"),
+                    submitText: document.getElementById("submit-text"),
+                    submitBtn: document.getElementById("submit"),
+                    submitInput: document.getElementById("submit-input"),
+                };
+
+                const texts = [
+                    "Antwoord verstuurd!",
+                    "Even nadenken… 🤔",
+                    "Dit ging snel!",
+                    "Goede keuze!",
+                    "Succes! 🍀",
+                    "Wachten op de rest…",
+                    "Bijna daar!",
+                    "Topantwoord! ⭐",
+                    "Ingezonden 🚀",
+                    "Slim gespeeld!",
+                ];
+
+                // Kies een random tekst
+                const randomText = texts[Math.floor(Math.random() * texts.length)];
+
+                elements.submitInput.value = randomText;
+                elements.submitBtn.style.display = 'none';
+                elements.game.style.display = 'none';
+                elements.submitText.style.display = 'inline-flex';
+
+                const nodeList = elements.game.querySelectorAll('input');
+                const input = [...nodeList].map(input => input.value);
+                const userStory = input.join(' ');
+
+                game.sendEvent('send-user-story', { message: userStory });
+            }
+        }
+        // })();
+
     </script>
 </body>
 
