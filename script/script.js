@@ -59,35 +59,6 @@ function copyBtn() {
     }, 1000);
 }
 
-async function submitBtn() {
-    const game = document.getElementById("game");
-    const submitText = document.getElementById("submit-text");
-    const submitBtn = document.getElementById("submit");
-    const submitInput = document.getElementById("submit-input");
-
-    const texts = [
-        "Antwoord verstuurd!",
-        "Even nadenken… 🤔",
-        "Dit ging snel!",
-        "Goede keuze!",
-        "Succes! 🍀",
-        "Wachten op de rest…",
-        "Bijna daar!",
-        "Topantwoord! ⭐",
-        "Ingezonden 🚀",
-        "Slim gespeeld!"
-    ];
-
-    // Kies een random tekst
-    const randomText = texts[Math.floor(Math.random() * texts.length)];
-
-    submitInput.value = randomText;
-
-    submitBtn.style.display = 'none';
-    game.style.display = 'none';
-    submitText.style.display = 'inline-flex';
-}
-
 class Game {
     constructor(ws) {
         this.ws = ws;
