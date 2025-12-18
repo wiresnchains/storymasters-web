@@ -59,21 +59,6 @@ function copyBtn() {
     }, 1000);
 }
 
-function voteBtn() {
-    const button = document.getElementById("voteBtn");
-
-    // Save original button content
-    const originalContent = button.innerHTML;
-
-    // Show image
-    button.innerHTML = `<img src="/img/check.png" alt="Copied" style="height:20px;">`;
-
-    // Restore after 1 second
-    setTimeout(() => {
-        button.innerHTML = originalContent;
-    }, 1000);
-}
-
 async function submitBtn() {
     const game = document.getElementById("game");
     const submitText = document.getElementById("submit-text");
@@ -147,3 +132,16 @@ class Game {
 function connectToGame(name, connectionCode) {
     return new Game(new WebSocket(getBaseURL(true) + "game/" + encodeURIComponent(connectionCode) + "/" + encodeURIComponent(name)));
 }
+
+const texts = [
+    "Antwoord verstuurd!",
+    "Even nadenken… 🤔",
+    "Dit ging snel!",
+    "Goede keuze!",
+    "Succes! 🍀",
+    "Wachten op de rest…",
+    "Bijna daar!",
+    "Topantwoord! ⭐",
+    "Ingezonden 🚀",
+    "Slim gespeeld!"
+];
