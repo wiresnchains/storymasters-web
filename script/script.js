@@ -59,50 +59,6 @@ function copyBtn() {
     }, 1000);
 }
 
-function voteBtn() {
-    const button = document.getElementById("voteBtn");
-
-    // Save original button content
-    const originalContent = button.innerHTML;
-
-    // Show image
-    button.innerHTML = `<img src="/img/check.png" alt="Vote" style="height:20px;">`;
-
-    // Restore after 1 second
-    setTimeout(() => {
-        button.innerHTML = originalContent;
-    }, 1000);
-}
-
-async function submitBtn() {
-    const game = document.getElementById("game");
-    const submitText = document.getElementById("submit-text");
-    const submitBtn = document.getElementById("submit");
-    const submitInput = document.getElementById("submit-input");
-
-    const texts = [
-        "Antwoord verstuurd!",
-        "Even nadenken… 🤔",
-        "Dit ging snel!",
-        "Goede keuze!",
-        "Succes! 🍀",
-        "Wachten op de rest…",
-        "Bijna daar!",
-        "Topantwoord! ⭐",
-        "Ingezonden 🚀",
-        "Slim gespeeld!"
-    ];
-
-    // Kies een random tekst
-    const randomText = texts[Math.floor(Math.random() * texts.length)];
-
-    submitInput.value = randomText;
-
-    submitBtn.style.display = 'none';
-    game.style.display = 'none';
-    submitText.style.display = 'inline-flex';
-}
-
 class Game {
     constructor(ws) {
         this.ws = ws;
@@ -147,3 +103,16 @@ class Game {
 function connectToGame(name, connectionCode) {
     return new Game(new WebSocket(getBaseURL(true) + "game/" + encodeURIComponent(connectionCode) + "/" + encodeURIComponent(name)));
 }
+
+const texts = [
+    "Antwoord verstuurd!",
+    "Even nadenken… 🤔",
+    "Dit ging snel!",
+    "Goede keuze!",
+    "Succes! 🍀",
+    "Wachten op de rest…",
+    "Bijna daar!",
+    "Topantwoord! ⭐",
+    "Ingezonden 🚀",
+    "Slim gespeeld!"
+];

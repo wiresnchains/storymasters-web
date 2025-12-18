@@ -36,7 +36,17 @@
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="voting">
-        voting
+        <div class="card vote flex vertical g-1">
+            <div class="voteOptions">
+                <table class="w-100" id="votes">
+                    <tr class="horizontal">
+                        <th class="flex">Naam</th>
+                        <th>User Story</th>
+                        <th class="flex">Vote</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
     </div>
 
     <div class="page-wrapper flex center-x center-y h-100" id="leaderboard">
@@ -47,6 +57,9 @@
 
     <script src="/script/script.js" type="text/javascript"></script>
     <script type="text/javascript">
+        let submitBtn;
+        let voteBtn;
+
         (() => {
             const params = new URLSearchParams(window.location.search);
             const connectionCode = params.get("connectionCode");
@@ -64,6 +77,7 @@
             const voting = document.getElementById("voting");
             const leaderboard = document.getElementById("leaderboard");
             const timer = document.getElementById("timer");
+            const votes = document.getElementById("votes");
             
             function switchView(view) {
                 theme.style.display = "none";
@@ -128,6 +142,28 @@
                 }, 1000);
             }
 
+            function toggleUserStorySent(sent) {
+                const game = document.getElementById("game");
+                const submitText = document.getElementById("submit-text");
+                const submitBtn = document.getElementById("submit");
+                const submitInput = document.getElementById("submit-input");
+
+                if (sent) {
+                    const randomText = texts[Math.floor(Math.random() * texts.length)];
+
+                    submitInput.value = randomText;
+
+                    submitBtn.style.display = 'none';
+                    game.style.display = 'none';
+                    submitText.style.display = 'inline-flex';
+                }
+                else {
+                    submitBtn.style.display = '';
+                    game.style.display = '';
+                    submitText.style.display = 'none';
+                }
+            }
+
             game.addEvent("player-joined", (name) => {
                 console.log("player " + name + " joined");
                 playerList.querySelector("#list").innerHTML += `<div class="card player flex center-x center-y" id="player-${name}"><p id="naam">${name}</p></div>`;
@@ -139,6 +175,7 @@
             });
 
             game.addEvent("start-round", (theme) => {
+                toggleUserStorySent(false);
                 switchView("user-story-input");
                 setTheme(theme);
                 startCountdown(60);
@@ -148,17 +185,71 @@
                 switchView("voting");
 
                 if (payload.showResults) {
-                    startCountdown(5);
+                    votes.innerHTML = `<tr class="horizontal">
+                        <th class="flex">Naam</th>
+                        <th>User Story</th>
+                        <th class="flex">Votes</th>
+                    </tr>`;
+                    
+                    payload.userStories.forEach(us => {
+                        votes.innerHTML += `<tr>
+                            <td><p class="naam">${us.owner.name}</p></td>
+                            <td><p class="userStory">${us.story}</p></td>
+                            <td>${us.votes}</td>
+                        </tr>`;
+                    });
+
+                    startCountdown(10);
                 }
                 else {
+                    votes.innerHTML = `<tr class="horizontal">
+                        <th class="flex">Naam</th>
+                        <th>User Story</th>
+                        <th class="flex">Vote</th>
+                    </tr>`;
+                    
+                    payload.userStories.forEach(us => {
+                        let lastRow = `<td></td>`;
+
+                        if (name !== us.owner.name) {
+                            lastRow = `<td><button id="voteBtn" onclick="voteBtn(${us.index})">Vote</button></td>`;
+                        }
+
+                        votes.innerHTML += `<tr>
+                            <td><p class="naam">${us.owner.name}</p></td>
+                            <td><p class="userStory">${us.story}</p></td>
+                            ${lastRow}
+                        </tr>`;
+                    });
+
                     startCountdown(10);
                 }
             });
 
             game.addEvent("show-leaderboard", (payload) => {
                 switchView("leaderboard");
-                startCountdown(5);
+                startCountdown(10);
             });
+
+            submitBtn = function() {
+                const actor = document.getElementById("input1").value;
+                const wantTo = document.getElementById("input2").value;
+                const soThat = document.getElementById("input3").value;
+
+                game.sendEvent("send-user-story", {
+                    message: `Als ${actor} wil ik ${wantTo} zodat ${soThat}`
+                });
+
+                toggleUserStorySent(true);
+            }
+
+            voteBtn = function(index) {
+                game.sendEvent("vote-for", {
+                    userStoryIndex: index
+                });
+
+                document.querySelectorAll("#voteBtn").forEach(e => e.remove());
+            }
         })();
     </script>
 </body>
